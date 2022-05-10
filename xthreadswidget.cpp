@@ -26,9 +26,72 @@ XThreadsWidget::XThreadsWidget(QWidget *pParent) :
     ui(new Ui::XThreadsWidget)
 {
     ui->setupUi(this);
+
+    g_pXInfoDB=nullptr;
+    g_pModel=nullptr;
+    g_pOldModel=nullptr;
 }
 
 XThreadsWidget::~XThreadsWidget()
 {
     delete ui;
+}
+
+void XThreadsWidget::setXInfoDB(XInfoDB *pXInfoDB, bool bReload)
+{
+    g_pXInfoDB=pXInfoDB;
+
+    if(bReload)
+    {
+        reload();
+    }
+}
+
+void XThreadsWidget::reload()
+{
+    if(g_pXInfoDB)
+    {
+        g_pOldModel=g_pModel;
+
+        XBinary::MODE modeAddress=XBinary::getModeOS();
+
+        QList<XInfoDB::THREAD_INFO> *pListThreads=g_pXInfoDB->getThreadInfos();
+
+        qint32 nNumberOfRecords=pListThreads->count();
+
+        g_pModel=new QStandardItemModel(nNumberOfRecords,__HEADER_COLUMN_size);
+
+        g_pModel->setHeaderData(HEADER_COLUMN_NUMBER,Qt::Horizontal,tr("Number"));
+
+        for(qint32 i=0;i<nNumberOfRecords;i++)
+        {
+            QStandardItem *pItemAddress=new QStandardItem;
+            pItemAddress->setText(QString::number(i));
+            pItemAddress->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
+            g_pModel->setItem(i,HEADER_COLUMN_NUMBER,pItemAddress);
+        }
+
+        ui->tableViewThreads->setModel(g_pModel);
+
+        #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+            QFuture<void> future=QtConcurrent::run(&XThreadsWidget::deleteOldModel,this);
+        #else
+            QFuture<void> future=QtConcurrent::run(this,&XThreadsWidget::deleteOldModel);
+        #endif
+    }
+}
+
+void XThreadsWidget::deleteOldModel()
+{
+    if(g_pOldModel)
+    {
+        delete g_pOldModel;
+
+        g_pOldModel=0;
+    }
+}
+
+void XThreadsWidget::registerShortcuts(bool bState)
+{
+    Q_UNUSED(bState)
 }

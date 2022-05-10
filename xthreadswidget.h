@@ -21,7 +21,12 @@
 #ifndef XTHREADSWIDGET_H
 #define XTHREADSWIDGET_H
 
+#include <QWidget>
+#include <QFuture>
+#include <QtConcurrent>
+#include <QStandardItemModel>
 #include "xshortcutswidget.h"
+#include "xinfodb.h"
 
 namespace Ui {
 class XThreadsWidget;
@@ -31,12 +36,35 @@ class XThreadsWidget : public XShortcutsWidget
 {
     Q_OBJECT
 
+    enum HEADER_COLUMN
+    {
+        HEADER_COLUMN_NUMBER=0,
+        __HEADER_COLUMN_size
+    };
+
+//    enum USERROLE
+//    {
+//        USERROLE_ADDRESS=0
+//    };
+
 public:
     explicit XThreadsWidget(QWidget *pParent=nullptr);
     ~XThreadsWidget();
 
+    void setXInfoDB(XInfoDB *pXInfoDB,bool bReload=true);
+    void reload();
+
+private:
+    void deleteOldModel();
+
+protected:
+    virtual void registerShortcuts(bool bState);
+
 private:
     Ui::XThreadsWidget *ui;
+    XInfoDB *g_pXInfoDB;
+    QStandardItemModel *g_pModel;
+    QStandardItemModel *g_pOldModel;
 };
 
 #endif // XTHREADSWIDGET_H
