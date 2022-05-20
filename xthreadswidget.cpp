@@ -37,7 +37,7 @@ XThreadsWidget::~XThreadsWidget()
     delete ui;
 }
 
-void XThreadsWidget::setXInfoDB(XInfoDB *pXInfoDB, bool bReload)
+void XThreadsWidget::setXInfoDB(XInfoDB *pXInfoDB,bool bReload)
 {
     g_pXInfoDB=pXInfoDB;
 
