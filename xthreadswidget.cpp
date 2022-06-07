@@ -62,13 +62,19 @@ void XThreadsWidget::reload()
         g_pModel=new QStandardItemModel(nNumberOfRecords,__HEADER_COLUMN_size);
 
         g_pModel->setHeaderData(HEADER_COLUMN_NUMBER,Qt::Horizontal,tr("Number"));
+        g_pModel->setHeaderData(HEADER_COLUMN_ID,Qt::Horizontal,QString("ID"));
 
         for(qint32 i=0;i<nNumberOfRecords;i++)
         {
-            QStandardItem *pItemAddress=new QStandardItem;
-            pItemAddress->setText(QString::number(i));
-            pItemAddress->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
-            g_pModel->setItem(i,HEADER_COLUMN_NUMBER,pItemAddress);
+            QStandardItem *pItemNumber=new QStandardItem;
+            pItemNumber->setText(QString::number(i));
+            pItemNumber->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
+            g_pModel->setItem(i,HEADER_COLUMN_NUMBER,pItemNumber);
+
+            QStandardItem *pItemID=new QStandardItem;
+            pItemID->setText(XBinary::valueToHex((quint32)(pListThreads->at(i).nThreadID)));
+            pItemID->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
+            g_pModel->setItem(i,HEADER_COLUMN_ID,pItemID);
         }
 
         ui->tableViewThreads->setModel(g_pModel);

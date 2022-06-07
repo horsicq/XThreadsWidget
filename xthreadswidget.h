@@ -39,6 +39,7 @@ class XThreadsWidget : public XShortcutsWidget
     enum HEADER_COLUMN
     {
         HEADER_COLUMN_NUMBER=0,
+        HEADER_COLUMN_ID,
         __HEADER_COLUMN_size
     };
 
