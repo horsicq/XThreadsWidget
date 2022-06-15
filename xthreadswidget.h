@@ -40,6 +40,9 @@ class XThreadsWidget : public XShortcutsWidget
     {
         HEADER_COLUMN_NUMBER=0,
         HEADER_COLUMN_ID,
+        HEADER_COLUMN_LOCALBASE,
+        HEADER_COLUMN_STARTADDRESS,
+        HEADER_COLUMN_NAME,
         __HEADER_COLUMN_size
     };
 

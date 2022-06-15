@@ -53,7 +53,7 @@ void XThreadsWidget::reload()
     {
         g_pOldModel=g_pModel;
 
-        XBinary::MODE modeAddress=XBinary::getModeOS();
+//        XBinary::MODE modeAddress=XBinary::getModeOS();
 
         QList<XInfoDB::THREAD_INFO> *pListThreads=g_pXInfoDB->getThreadInfos();
 
@@ -63,6 +63,9 @@ void XThreadsWidget::reload()
 
         g_pModel->setHeaderData(HEADER_COLUMN_NUMBER,Qt::Horizontal,tr("Number"));
         g_pModel->setHeaderData(HEADER_COLUMN_ID,Qt::Horizontal,QString("ID"));
+        g_pModel->setHeaderData(HEADER_COLUMN_LOCALBASE,Qt::Horizontal,QString("Base"));
+        g_pModel->setHeaderData(HEADER_COLUMN_STARTADDRESS,Qt::Horizontal,QString("Start"));
+        g_pModel->setHeaderData(HEADER_COLUMN_NAME,Qt::Horizontal,QString("Name"));
 
         for(qint32 i=0;i<nNumberOfRecords;i++)
         {
@@ -75,6 +78,21 @@ void XThreadsWidget::reload()
             pItemID->setText(XBinary::valueToHex((quint32)(pListThreads->at(i).nThreadID)));
             pItemID->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
             g_pModel->setItem(i,HEADER_COLUMN_ID,pItemID);
+
+            QStandardItem *pItemLocalBase=new QStandardItem;
+            pItemLocalBase->setText(XBinary::valueToHexOS((quint32)(pListThreads->at(i).nThreadLocalBase)));
+            pItemLocalBase->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
+            g_pModel->setItem(i,HEADER_COLUMN_LOCALBASE,pItemLocalBase);
+
+            QStandardItem *pItemStartAddress=new QStandardItem;
+            pItemStartAddress->setText(XBinary::valueToHexOS((quint32)(pListThreads->at(i).nStartAddress)));
+            pItemStartAddress->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
+            g_pModel->setItem(i,HEADER_COLUMN_STARTADDRESS,pItemStartAddress);
+
+            QStandardItem *pItemName=new QStandardItem;
+            pItemName->setText(""); // TODO !!!
+            pItemName->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
+            g_pModel->setItem(i,HEADER_COLUMN_NAME,pItemName);
         }
 
         ui->tableViewThreads->setModel(g_pModel);
