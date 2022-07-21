@@ -97,21 +97,7 @@ void XThreadsWidget::reload()
 
         ui->tableViewThreads->setModel(g_pModel);
 
-        #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
-            QFuture<void> future=QtConcurrent::run(&XThreadsWidget::deleteOldModel,this);
-        #else
-            QFuture<void> future=QtConcurrent::run(this,&XThreadsWidget::deleteOldModel);
-        #endif
-    }
-}
-
-void XThreadsWidget::deleteOldModel()
-{
-    if(g_pOldModel)
-    {
-        delete g_pOldModel;
-
-        g_pOldModel=0;
+        deleteOldModel(&g_pOldModel);
     }
 }
 
