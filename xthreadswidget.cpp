@@ -19,80 +19,72 @@
  * SOFTWARE.
  */
 #include "xthreadswidget.h"
+
 #include "ui_xthreadswidget.h"
 
-XThreadsWidget::XThreadsWidget(QWidget *pParent) :
-    XShortcutsWidget(pParent),
-    ui(new Ui::XThreadsWidget)
-{
+XThreadsWidget::XThreadsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::XThreadsWidget) {
     ui->setupUi(this);
 
-    g_pXInfoDB=nullptr;
-    g_pModel=nullptr;
-    g_pOldModel=nullptr;
+    g_pXInfoDB = nullptr;
+    g_pModel = nullptr;
+    g_pOldModel = nullptr;
 }
 
-XThreadsWidget::~XThreadsWidget()
-{
+XThreadsWidget::~XThreadsWidget() {
     delete ui;
 }
 
-void XThreadsWidget::setXInfoDB(XInfoDB *pXInfoDB,bool bReload)
-{
-    g_pXInfoDB=pXInfoDB;
+void XThreadsWidget::setXInfoDB(XInfoDB *pXInfoDB, bool bReload) {
+    g_pXInfoDB = pXInfoDB;
 
-    if(bReload)
-    {
+    if (bReload) {
         reload();
     }
 }
 
-void XThreadsWidget::reload()
-{
-    if(g_pXInfoDB)
-    {
-        g_pOldModel=g_pModel;
+void XThreadsWidget::reload() {
+    if (g_pXInfoDB) {
+        g_pOldModel = g_pModel;
 
-//        XBinary::MODE modeAddress=XBinary::getModeOS();
+        //        XBinary::MODE modeAddress=XBinary::getModeOS();
 
-        QList<XInfoDB::THREAD_INFO> *pListThreads=g_pXInfoDB->getThreadInfos();
+        QList<XInfoDB::THREAD_INFO> *pListThreads = g_pXInfoDB->getThreadInfos();
 
-        qint32 nNumberOfRecords=pListThreads->count();
+        qint32 nNumberOfRecords = pListThreads->count();
 
-        g_pModel=new QStandardItemModel(nNumberOfRecords,__HEADER_COLUMN_size);
+        g_pModel = new QStandardItemModel(nNumberOfRecords, __HEADER_COLUMN_size);
 
-        g_pModel->setHeaderData(HEADER_COLUMN_NUMBER,Qt::Horizontal,tr("Number"));
-        g_pModel->setHeaderData(HEADER_COLUMN_ID,Qt::Horizontal,QString("ID"));
-        g_pModel->setHeaderData(HEADER_COLUMN_LOCALBASE,Qt::Horizontal,QString("Base"));
-        g_pModel->setHeaderData(HEADER_COLUMN_STARTADDRESS,Qt::Horizontal,QString("Start"));
-        g_pModel->setHeaderData(HEADER_COLUMN_NAME,Qt::Horizontal,QString("Name"));
+        g_pModel->setHeaderData(HEADER_COLUMN_NUMBER, Qt::Horizontal, tr("Number"));
+        g_pModel->setHeaderData(HEADER_COLUMN_ID, Qt::Horizontal, QString("ID"));
+        g_pModel->setHeaderData(HEADER_COLUMN_LOCALBASE, Qt::Horizontal, QString("Base"));
+        g_pModel->setHeaderData(HEADER_COLUMN_STARTADDRESS, Qt::Horizontal, QString("Start"));
+        g_pModel->setHeaderData(HEADER_COLUMN_NAME, Qt::Horizontal, QString("Name"));
 
-        for(qint32 i=0;i<nNumberOfRecords;i++)
-        {
-            QStandardItem *pItemNumber=new QStandardItem;
+        for (qint32 i = 0; i < nNumberOfRecords; i++) {
+            QStandardItem *pItemNumber = new QStandardItem;
             pItemNumber->setText(QString::number(i));
-            pItemNumber->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
-            g_pModel->setItem(i,HEADER_COLUMN_NUMBER,pItemNumber);
+            pItemNumber->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            g_pModel->setItem(i, HEADER_COLUMN_NUMBER, pItemNumber);
 
-            QStandardItem *pItemID=new QStandardItem;
+            QStandardItem *pItemID = new QStandardItem;
             pItemID->setText(XBinary::valueToHex((quint32)(pListThreads->at(i).nThreadID)));
-            pItemID->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
-            g_pModel->setItem(i,HEADER_COLUMN_ID,pItemID);
+            pItemID->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            g_pModel->setItem(i, HEADER_COLUMN_ID, pItemID);
 
-            QStandardItem *pItemLocalBase=new QStandardItem;
+            QStandardItem *pItemLocalBase = new QStandardItem;
             pItemLocalBase->setText(XBinary::valueToHexOS((quint32)(pListThreads->at(i).nThreadLocalBase)));
-            pItemLocalBase->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
-            g_pModel->setItem(i,HEADER_COLUMN_LOCALBASE,pItemLocalBase);
+            pItemLocalBase->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            g_pModel->setItem(i, HEADER_COLUMN_LOCALBASE, pItemLocalBase);
 
-            QStandardItem *pItemStartAddress=new QStandardItem;
+            QStandardItem *pItemStartAddress = new QStandardItem;
             pItemStartAddress->setText(XBinary::valueToHexOS((quint32)(pListThreads->at(i).nStartAddress)));
-            pItemStartAddress->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
-            g_pModel->setItem(i,HEADER_COLUMN_STARTADDRESS,pItemStartAddress);
+            pItemStartAddress->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+            g_pModel->setItem(i, HEADER_COLUMN_STARTADDRESS, pItemStartAddress);
 
-            QStandardItem *pItemName=new QStandardItem;
-            pItemName->setText(""); // TODO !!!
-            pItemName->setTextAlignment(Qt::AlignLeft|Qt::AlignVCenter);
-            g_pModel->setItem(i,HEADER_COLUMN_NAME,pItemName);
+            QStandardItem *pItemName = new QStandardItem;
+            pItemName->setText("");  // TODO !!!
+            pItemName->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+            g_pModel->setItem(i, HEADER_COLUMN_NAME, pItemName);
         }
 
         ui->tableViewThreads->setModel(g_pModel);
@@ -101,7 +93,6 @@ void XThreadsWidget::reload()
     }
 }
 
-void XThreadsWidget::registerShortcuts(bool bState)
-{
+void XThreadsWidget::registerShortcuts(bool bState) {
     Q_UNUSED(bState)
 }

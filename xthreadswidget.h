@@ -21,24 +21,23 @@
 #ifndef XTHREADSWIDGET_H
 #define XTHREADSWIDGET_H
 
-#include <QWidget>
 #include <QFuture>
-#include <QtConcurrent>
 #include <QStandardItemModel>
-#include "xshortcutswidget.h"
+#include <QWidget>
+#include <QtConcurrent>
+
 #include "xinfodb.h"
+#include "xshortcutswidget.h"
 
 namespace Ui {
 class XThreadsWidget;
 }
 
-class XThreadsWidget : public XShortcutsWidget
-{
+class XThreadsWidget : public XShortcutsWidget {
     Q_OBJECT
 
-    enum HEADER_COLUMN
-    {
-        HEADER_COLUMN_NUMBER=0,
+    enum HEADER_COLUMN {
+        HEADER_COLUMN_NUMBER = 0,
         HEADER_COLUMN_ID,
         HEADER_COLUMN_LOCALBASE,
         HEADER_COLUMN_STARTADDRESS,
@@ -46,16 +45,16 @@ class XThreadsWidget : public XShortcutsWidget
         __HEADER_COLUMN_size
     };
 
-//    enum USERROLE
-//    {
-//        USERROLE_ADDRESS=0
-//    };
+    //    enum USERROLE
+    //    {
+    //        USERROLE_ADDRESS=0
+    //    };
 
 public:
-    explicit XThreadsWidget(QWidget *pParent=nullptr);
+    explicit XThreadsWidget(QWidget *pParent = nullptr);
     ~XThreadsWidget();
 
-    void setXInfoDB(XInfoDB *pXInfoDB,bool bReload=true);
+    void setXInfoDB(XInfoDB *pXInfoDB, bool bReload = true);
     void reload();
 
 protected:
@@ -68,4 +67,4 @@ private:
     QStandardItemModel *g_pOldModel;
 };
 
-#endif // XTHREADSWIDGET_H
+#endif  // XTHREADSWIDGET_H
