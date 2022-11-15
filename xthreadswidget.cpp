@@ -22,7 +22,8 @@
 
 #include "ui_xthreadswidget.h"
 
-XThreadsWidget::XThreadsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::XThreadsWidget) {
+XThreadsWidget::XThreadsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::XThreadsWidget)
+{
     ui->setupUi(this);
 
     g_pXInfoDB = nullptr;
@@ -30,11 +31,13 @@ XThreadsWidget::XThreadsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui
     g_pOldModel = nullptr;
 }
 
-XThreadsWidget::~XThreadsWidget() {
+XThreadsWidget::~XThreadsWidget()
+{
     delete ui;
 }
 
-void XThreadsWidget::setXInfoDB(XInfoDB *pXInfoDB, bool bReload) {
+void XThreadsWidget::setXInfoDB(XInfoDB *pXInfoDB, bool bReload)
+{
     g_pXInfoDB = pXInfoDB;
 
     if (bReload) {
@@ -42,7 +45,8 @@ void XThreadsWidget::setXInfoDB(XInfoDB *pXInfoDB, bool bReload) {
     }
 }
 
-void XThreadsWidget::reload() {
+void XThreadsWidget::reload()
+{
     if (g_pXInfoDB) {
         g_pOldModel = g_pModel;
 
@@ -93,6 +97,7 @@ void XThreadsWidget::reload() {
     }
 }
 
-void XThreadsWidget::registerShortcuts(bool bState) {
+void XThreadsWidget::registerShortcuts(bool bState)
+{
     Q_UNUSED(bState)
 }
