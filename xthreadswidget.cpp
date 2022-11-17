@@ -22,7 +22,8 @@
 
 #include "ui_xthreadswidget.h"
 
-XThreadsWidget::XThreadsWidget(QWidget *pParent) : XShortcutsWidget(pParent), ui(new Ui::XThreadsWidget)
+XThreadsWidget::XThreadsWidget(QWidget *pParent)
+    : XShortcutsWidget(pParent), ui(new Ui::XThreadsWidget)
 {
     ui->setupUi(this);
 
