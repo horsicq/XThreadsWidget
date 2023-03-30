@@ -52,6 +52,7 @@ void XThreadsWidget::reload()
 
         //        XBinary::MODE modeAddress=XBinary::getModeOS();
 
+        // TODO getCurrentThreadsList()
         QList<XInfoDB::THREAD_INFO> *pListThreads = g_pXInfoDB->getThreadInfos();
 
         qint32 nNumberOfRecords = pListThreads->count();
