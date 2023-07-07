@@ -64,6 +64,7 @@ void XThreadsWidget::reload()
         g_pModel->setHeaderData(HEADER_COLUMN_LOCALBASE, Qt::Horizontal, QString("Base"));
         g_pModel->setHeaderData(HEADER_COLUMN_STARTADDRESS, Qt::Horizontal, QString("Start"));
         g_pModel->setHeaderData(HEADER_COLUMN_NAME, Qt::Horizontal, QString("Name"));
+        g_pModel->setHeaderData(HEADER_COLUMN_STATUS, Qt::Horizontal, QString("Status"));
 
         for (qint32 i = 0; i < nNumberOfRecords; i++) {
             QStandardItem *pItemNumber = new QStandardItem;
@@ -90,6 +91,11 @@ void XThreadsWidget::reload()
             pItemName->setText("");  // TODO !!!
             pItemName->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
             g_pModel->setItem(i, HEADER_COLUMN_NAME, pItemName);
+
+            QStandardItem *pItemStatus = new QStandardItem;
+            pItemStatus->setText(XInfoDB::threadStatusToString(pListThreads->at(i).threadStatus));
+            pItemStatus->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+            g_pModel->setItem(i, HEADER_COLUMN_STATUS, pItemStatus);
         }
 
         ui->tableViewThreads->setModel(g_pModel);
