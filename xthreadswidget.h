@@ -55,6 +55,8 @@ public:
     explicit XThreadsWidget(QWidget *pParent = nullptr);
     ~XThreadsWidget();
 
+    virtual void adjustView() {}
+
     void setXInfoDB(XInfoDB *pXInfoDB, bool bReload = true);
     void reload();
 
