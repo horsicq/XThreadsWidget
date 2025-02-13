@@ -100,7 +100,7 @@ void XThreadsWidget::reload()
 
         ui->tableViewThreads->setModel(g_pModel);
 
-        deleteOldStandardModel(&g_pOldModel);
+        // deleteOldStandardModel(&g_pOldModel);
     }
 }
 
