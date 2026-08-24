@@ -73,7 +73,7 @@ void XThreadsWidget::reload()
             g_pModel->setItem(i, HEADER_COLUMN_NUMBER, pItemNumber);
 
             QStandardItem *pItemID = new QStandardItem;
-            pItemID->setText(XBinary::valueToHex((quint32)(pListThreads->at(i).nThreadID)));
+            pItemID->setText(XBinary::valueToHex((quint64)(pListThreads->at(i).nThreadID)));
             pItemID->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
             g_pModel->setItem(i, HEADER_COLUMN_ID, pItemID);
 
